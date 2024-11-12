@@ -1,27 +1,46 @@
-![Logo](https://raw.githubusercontent.com/seigel/pouchdb-react-native/master/static/pouchdb-react-native.png)
+![Logo](https://raw.githubusercontent.com/stockulus/pouchdb-react-native/master/static/pouchdb-react-native.png)
 
-[![npm Package](https://img.shields.io/npm/dm/pouchdb-react-native.svg)](https://www.npmjs.com/package/pouchdb-react-native) [![npm Package](https://img.shields.io/npm/v/pouchdb-react-native.svg)](https://www.npmjs.com/package/pouchdb-react-native) [![travis-ci.org](https://travis-ci.org/seigel/pouchdb-react-native.svg)](https://travis-ci.org/seigel/pouchdb-react-native) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![license](https://img.shields.io/npm/l/pouchdb-react-native.svg?maxAge=2592000)](https://opensource.org/licenses/MIT)
-
-# Dormant
-
-# NEEDS NEW OWNER
-
-[July 24, 2023] After getting asked on when the next updates will happen, I promised that I would review over the weekend and figure out what needs to be done.  THE BEST path forward is to have someone pick it up and carry it forward.  I was keen then covid hit and changed everything.  I am not able to do it any more, even though I never really got going because of the bad timing of everything.  I had high hopes and here we are.  
-
-Reach out if there is interest.
-
-
-pouchdb-react-native
+pouchdb-asyncstorage-adapter
 ======
 
-PouchDB, the React Native-only edition. A preset representing the PouchDB code that runs in React Native.
-
-The `pouchdb-react-native` preset contains the version of PouchDB that is designed for React Native. In particular, it
-ships with the AsyncStorage adapter as its default adapter. It also contains the replication, HTTP, and map/reduce plugins.
+forked from [pouchdb-adapter-asyncstorage](https://github.com/seigel/pouchdb-react-native/tree/master/packages/pouchdb-adapter-asyncstorage)
 
 
-# USAGE
-The package needs some work to get up to speed with the latest async requirements and the latest react native requirements.  I am removing the usage area until the package is more easily installed. (November 14, 2022)
+PouchDB adapter using AsyncStorage as its data store. Designed to run in ReactNative. Its adapter name is `'asyncstorage'`.
 
----
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000)](https://twitter.com/cgul) [![GitHub stars](https://img.shields.io/github/stars/seigel/pouchdb-react-native.svg?style=social&label=Star)](https://github.com/seigel/pouchdb-react-native)
+### Usage
+
+```bash
+npm install @neighbourhoodie/pouchdb-asyncstorage-adapter --save
+```
+
+```js
+import PouchDB from 'pouchdb-core'
+PouchDB.plugin(require('@neighbourhoodie/pouchdb-asyncstorage-adapter').default)
+const db = new PouchDB('mydb', {adapter: 'asyncstorage'})
+
+// use PouchDB
+db.get('4711')
+  .then(doc => console.log(doc))
+
+```
+
+### Android limit
+> TODO: to be checked if this still relevant in 2024 
+On Android asyncstorage has a limitation of 6 MB per default, you might want to increase it
+
+```java
+// MainApplication.getPackages()
+long size = 50L * 1024L * 1024L; // 50 MB
+com.facebook.react.modules.storage.ReactDatabaseSupplier.getInstance(getApplicationContext()).setMaximumSize(size);
+```
+
+For full API documentation and guides on PouchDB, see [PouchDB.com](http://pouchdb.com/). For details on PouchDB sub-packages, see the [Custom Builds documentation](http://pouchdb.com/custom.html).
+
+
+
+
+## TODO;
+- Add typescript
+- Check Web Compatibility 
+- More todos....
