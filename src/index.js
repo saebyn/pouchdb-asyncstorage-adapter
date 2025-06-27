@@ -108,13 +108,13 @@ function AsyncStoragePouch(dbOpts, constuctorCallback) {
 
       isRunning = true
       const task = queue.shift()
-      setImmediate(() => {
+      setTimeout(() => {
         task.func((error, result) => {
           task.callback && task.callback(error, result)
           isRunning = false
           run()
         })
-      })
+      }, 0)
     }
 
     queue.push({ func, callback })
