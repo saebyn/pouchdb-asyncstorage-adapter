@@ -129,7 +129,6 @@ AsyncStoragePouch.valid = () => {
     return false
   }
 }
-};
 
 AsyncStoragePouch.use_prefix = false
 
