@@ -7,4 +7,4 @@ global.btoa = global.btoa || require('btoa')
 require('blob-polyfill')
 
 if (!process.version) process.version = 'core-js'
-process.nextTick = process.nextTick || setImmediate
+process.nextTick = process.nextTick || global.setImmediate
