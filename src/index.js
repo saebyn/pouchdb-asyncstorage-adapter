@@ -124,14 +124,15 @@ function AsyncStoragePouch(dbOpts, constuctorCallback) {
 
 AsyncStoragePouch.valid = () => {
   try {
-    return require('react-native').AsyncStorage !== null
+    return require('@react-native-async-storage/async-storage').default !== null
   } catch (error) {
     return false
   }
 }
+};
 
 AsyncStoragePouch.use_prefix = false
 
-export default function(PouchDB) {
+export default function (PouchDB) {
   PouchDB.adapter(ADAPTER_NAME, AsyncStoragePouch, true)
 }

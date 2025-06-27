@@ -4,7 +4,7 @@
  * Adapted from https://github.com/tradle/asyncstorage-down
  */
 
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from '@react-native-async-storage/async-storage'
 import { safeJsonParse, safeJsonStringify } from 'pouchdb-json'
 
 function createPrefix(dbName) {
@@ -25,7 +25,7 @@ function AsyncStorageCore(dbName) {
   this._prefix = createPrefix(dbName)
 }
 
-AsyncStorageCore.prototype.getKeys = function(callback) {
+AsyncStorageCore.prototype.getKeys = function (callback) {
   const keys = []
   const prefix = this._prefix
   const prefixLen = prefix.length
@@ -57,12 +57,12 @@ const stringifyValue = value => {
   return safeJsonStringify(value)
 }
 
-AsyncStorageCore.prototype.put = function(key, value, callback) {
+AsyncStorageCore.prototype.put = function (key, value, callback) {
   key = prepareKey(key, this)
   AsyncStorage.setItem(key, stringifyValue(value), callback)
 }
 
-AsyncStorageCore.prototype.multiPut = function(pairs, callback) {
+AsyncStorageCore.prototype.multiPut = function (pairs, callback) {
   pairs = pairs.map(pair => [
     prepareKey(pair[0], this),
     stringifyValue(pair[1])
@@ -77,14 +77,14 @@ const parseValue = value => {
   return null
 }
 
-AsyncStorageCore.prototype.get = function(key, callback) {
+AsyncStorageCore.prototype.get = function (key, callback) {
   key = prepareKey(key, this)
   AsyncStorage.getItem(key)
     .then(item => callback(null, parseValue(item)))
     .catch(callback)
 }
 
-AsyncStorageCore.prototype.multiGet = function(keys, callback) {
+AsyncStorageCore.prototype.multiGet = function (keys, callback) {
   keys = keys.map(key => prepareKey(key, this))
 
   AsyncStorage.multiGet(keys)
@@ -92,17 +92,17 @@ AsyncStorageCore.prototype.multiGet = function(keys, callback) {
     .catch(callback)
 }
 
-AsyncStorageCore.prototype.remove = function(key, callback) {
+AsyncStorageCore.prototype.remove = function (key, callback) {
   key = prepareKey(key, this)
   AsyncStorage.removeItem(key, callback)
 }
 
-AsyncStorageCore.prototype.multiRemove = function(keys, callback) {
+AsyncStorageCore.prototype.multiRemove = function (keys, callback) {
   keys = keys.map(key => prepareKey(key, this))
   AsyncStorage.multiRemove(keys, callback)
 }
 
-AsyncStorageCore.destroy = function(dbName, callback) {
+AsyncStorageCore.destroy = function (dbName, callback) {
   const prefix = createPrefix(dbName)
   const prefixLen = prefix.length
 
